@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Snipe It</string>
+
+    <string name="Open">Open</string>
+
+    <string name="Close">Close</string>
+
+    <string name="comapnie_activity">Companies</string>
+
+    <string name="add_asset">Add Asset</string>
+
+    <string name="add_company">Add Company</string>
+
+    <string name="edit_company">Edit Company</string>
+
+    <string name="company_data_detail">Company Details</string>
+</resources>
