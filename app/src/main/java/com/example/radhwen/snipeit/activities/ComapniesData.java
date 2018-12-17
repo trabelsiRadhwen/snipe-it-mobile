@@ -1,6 +1,7 @@
 package com.example.radhwen.snipeit.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,8 @@ import com.example.radhwen.snipeit.R;
 import com.example.radhwen.snipeit.services.CompanieServices;
 
 public class ComapniesData extends AppCompatActivity {
+
+    SharedPreferences sharedPreferences;
 
     private static final String TAG_NAME = ComapniesData.class.getSimpleName();
 
@@ -30,7 +33,15 @@ public class ComapniesData extends AppCompatActivity {
         TextView company = (TextView) findViewById(R.id.company_name_data);
         //TextView assetsCount = (TextView) findViewById(R.id.company_assets_count_data);
 
-        Intent intent = getIntent();
+        sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
+
+        id = sharedPreferences.getInt("id", 0);
+
+        company_data = sharedPreferences.getString("name", "");
+
+        company.setText(company_data);
+
+        /*Intent intent = getIntent();
 
         company_data = intent.getStringExtra("company");
 
@@ -38,7 +49,7 @@ public class ComapniesData extends AppCompatActivity {
 
         //Integer assets_count = intent.getExtras().getInt("assetsCount");
 
-        company.setText(company_data);
+        company.setText(company_data);*/
 
         //assetsCount.setText(assets_count);
 
@@ -65,6 +76,13 @@ public class ComapniesData extends AppCompatActivity {
 
         switch(id) {
             case R.id.edit_company:
+
+                sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
+
+                id = sharedPreferences.getInt("id", 0);
+
+                company_data = sharedPreferences.getString("name", "");
+
                 Intent intent = new Intent(ComapniesData.this, UpdateCompany.class);
                 startActivity(intent);
                 break;
