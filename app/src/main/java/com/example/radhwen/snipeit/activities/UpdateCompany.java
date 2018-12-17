@@ -1,6 +1,7 @@
 package com.example.radhwen.snipeit.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UpdateCompany extends AppCompatActivity {
+
+    SharedPreferences sharedPreferences;
 
     private static final String TAG_NAME = UpdateCompany.class.getSimpleName();
 
@@ -41,13 +44,22 @@ public class UpdateCompany extends AppCompatActivity {
 
         editBtn = findViewById(R.id.edit_company_btn);
 
-        Intent intent = getIntent();
+        sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
+
+        id = sharedPreferences.getInt("id", 0);
+
+        name = sharedPreferences.getString("name", "");
+
+        companyName.setText(name);
+
+
+        /*Intent intent = getIntent();
 
         id = intent.getExtras().getInt("id");
 
         name = intent.getStringExtra("company");
 
-        companyName.setText(name);
+        companyName.setText(name);*/
 
         Log.d(TAG_NAME, "Intent Response: \n "
                 +"Id Response: " +id +"\n"
