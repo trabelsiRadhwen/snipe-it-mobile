@@ -1,5 +1,8 @@
 package com.example.radhwen.snipeit.activities;
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +12,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.radhwen.snipeit.R;
+import com.example.radhwen.snipeit.model.CompanieRows;
+import com.example.radhwen.snipeit.net.ApiConnect;
 import com.example.radhwen.snipeit.services.CompanieServices;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ComapniesData extends AppCompatActivity {
 
@@ -23,7 +33,7 @@ public class ComapniesData extends AppCompatActivity {
 
     private String company_data;
 
-    private int id;
+    private int idComp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +45,7 @@ public class ComapniesData extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
 
-        id = sharedPreferences.getInt("id", 0);
+        idComp = sharedPreferences.getInt("id", 0);
 
         company_data = sharedPreferences.getString("name", "");
 
@@ -54,7 +64,7 @@ public class ComapniesData extends AppCompatActivity {
         //assetsCount.setText(assets_count);
 
         Log.d(TAG_NAME, "Intent Response: \n"
-                +"Id: " +id +"\n"
+                +"Id: " +idComp +"\n"
                 +"Company Name: " +company_data +"\n"
                 //+"Assets Count: " +assets_count +"\n"
         );
@@ -79,15 +89,74 @@ public class ComapniesData extends AppCompatActivity {
 
                 sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
 
-                id = sharedPreferences.getInt("id", 0);
+                idComp = sharedPreferences.getInt("id", 0);
 
                 company_data = sharedPreferences.getString("name", "");
 
                 Intent intent = new Intent(ComapniesData.this, UpdateCompany.class);
                 startActivity(intent);
                 break;
+
+                default:
+                    confirmDelete();
+                    break;
+
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void confirmDelete() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(R.string.delete_company_dialog_message)
+                .setTitle(R.string.delete_company_dialog_title)
+                .setCancelable(true);
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteCompany(idComp);
+
+                Toast.makeText(ComapniesData.this, "Company "+company_data +"Successfully deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void deleteCompany(final int id) {
+
+        CompanieServices services = ApiConnect.getClient().create(CompanieServices.class);
+
+        Call<CompanieRows> call = services.deleteCompany(API_KEY, idComp);
+
+        call.enqueue(new Callback<CompanieRows>() {
+            @Override
+            public void onResponse(Call<CompanieRows> call, Response<CompanieRows> response) {
+
+                Log.d(TAG_NAME, "Company's id: " +id +"\n"
+                        +"Company: " +company_data
+                );
+            }
+
+            @Override
+            public void onFailure(Call<CompanieRows> call, Throwable t) {
+
+                Log.e(TAG_NAME, "Failed to delete company ! ");
+
+                Toast.makeText(ComapniesData.this, "Failed to Connect !", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
     }
 }
