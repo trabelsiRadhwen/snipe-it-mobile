@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Name: "
         android:textSize="15dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/asset_name_data"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="Tag: "
         android:textSize="15dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/asset_tag_data"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="Model: "
         android:textSize="15dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/asset_model_data"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:text="Category: "
         android:textSize="15dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/asset_category_data"
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:text="Status: "
         android:textSize="15dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/asset_status_data"
@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:text="Company: "
         android:textSize="15dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/asset_company_data"
