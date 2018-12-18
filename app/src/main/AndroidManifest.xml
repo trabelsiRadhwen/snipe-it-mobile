@@ -21,7 +21,8 @@
         <activity
             android:name=".activities.CompanieActivity"
             android:label="@string/comapnie_activity" />
-        <activity android:name=".activities.AssetsData" />
+        <activity android:name=".activities.AssetsData"
+            android:label="@string/asset_data_detail"/>
         <activity
             android:name=".activities.ComapniesData"
             android:label="@string/company_data_detail" />
@@ -31,8 +32,11 @@
         <activity
             android:name=".activities.NewCompany"
             android:label="@string/add_company" />
-        <activity android:name=".activities.UpdateCompany"
-            android:label="@string/edit_company"></activity>
+        <activity
+            android:name=".activities.UpdateCompany"
+            android:label="@string/edit_company" />
+        <activity android:name=".activities.UpdateAsset"
+            android:label="@string/edit_asset"></activity>
     </application>
 
 </manifest>
