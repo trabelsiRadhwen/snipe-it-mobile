@@ -14,4 +14,16 @@
     <string name="edit_company">Edit Company</string>
 
     <string name="company_data_detail">Company Details</string>
+
+    <string name="asset_data_detail">Asset Details</string>
+
+    <string name="edit_asset">Edit Asset</string>
+
+    <string name="delete_company_dialog_message">Are you sure you want to delete this item?</string>
+
+    <string name="delete_company_dialog_title">Delete Company</string>
+
+    <string name="delete_asset_dialog_message">Are you sure you want to delete this item?</string>
+
+    <string name="delete_asset_dialog_title">Delete Asset</string>
 </resources>
