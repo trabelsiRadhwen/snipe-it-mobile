@@ -33,6 +33,8 @@ public class Rows {
     @Expose
     private StatusLabelRows statusLabel;
 
+
+
     public Rows(String name, ModelRows model, CompanieRows company, StatusLabelRows statusLabel) {
         this.name = name;
         this.model = model;
