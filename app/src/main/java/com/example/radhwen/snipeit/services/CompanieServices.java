@@ -4,6 +4,7 @@ import com.example.radhwen.snipeit.model.CompanieRows;
 import com.example.radhwen.snipeit.model.Companies;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -27,4 +28,8 @@ public interface CompanieServices {
     Call<CompanieRows> updateCompany(@Header("Authorization") String api_key,
                                      @Path("id") int id,
                                      @Field("name") String name);
+
+    @DELETE("companies/{id}")
+    Call<CompanieRows> deleteCompany(@Header("Authorization") String api_key,
+                                     @Path("id") int id);
 }
