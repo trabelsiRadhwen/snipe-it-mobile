@@ -1,6 +1,8 @@
 package com.example.radhwen.snipeit;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -38,6 +40,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String PREFERENCES_NAME = "assetsPref";
+
+    SharedPreferences preferences;
 
     private DrawerLayout drawer;
 
@@ -96,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
 
         final ListView listView = findViewById(R.id.assets_result);
 
+        preferences = getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+
         AssetServices services = ApiConnect.getClient().create(AssetServices.class);
 
         Call<Asset> call = services.getAssets(API_KEY);
@@ -108,10 +116,13 @@ public class MainActivity extends AppCompatActivity {
 
                 listView.setAdapter(new AssetAdapter(MainActivity.this, list));
 
+                final SharedPreferences.Editor editor = preferences.edit();
+
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                        int idAsset = list.get(position).getId();
                         String name = list.get(position).getName();
                         String tag = list.get(position).getTag();
                         ModelRows model = list.get(position).getModel();
@@ -119,7 +130,20 @@ public class MainActivity extends AppCompatActivity {
                         StatusLabelRows status = list.get(position).getStatusLabel();
                         CompanieRows company = list.get(position).getCompany();
 
-                        Intent intent = new Intent(getApplication(), AssetsData.class);
+                        editor.putInt("id", idAsset);
+                        editor.putString("name", name);
+                        editor.putString("tag", tag);
+                        editor.putString("model", String.valueOf(model));
+                        editor.putString("category", String.valueOf(category));
+                        editor.putString("status", String.valueOf(status));
+                        editor.putString("company", String.valueOf(company));
+
+                        editor.apply();
+
+                        Intent intent = new Intent(MainActivity.this, AssetsData.class);
+                        startActivity(intent);
+
+                        /*Intent intent = new Intent(getApplication(), AssetsData.class);
 
                         intent.putExtra("name", name);
                         intent.putExtra("tag", tag);
@@ -127,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("category", category);
                         intent.putExtra("status", status);
                         intent.putExtra("company", company);
-                        startActivity(intent);
+                        startActivity(intent);*/
                     }
                 });
 
