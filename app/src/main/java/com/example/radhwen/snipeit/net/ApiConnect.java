@@ -1,5 +1,8 @@
 package com.example.radhwen.snipeit.net;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -10,6 +13,10 @@ public class ApiConnect {
     private static Retrofit retrofit = null;
 
     public static final Retrofit getClient() {
+
+        /*GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setLenient();
+        Gson gson = gsonBuilder.create();*/
 
         if (retrofit == null) {
 

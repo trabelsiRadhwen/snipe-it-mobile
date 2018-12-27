@@ -5,15 +5,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.radhwen.snipeit.R;
+import com.example.radhwen.snipeit.model.CompanieRows;
+import com.example.radhwen.snipeit.model.Companies;
+import com.example.radhwen.snipeit.model.Model;
+import com.example.radhwen.snipeit.model.ModelRows;
 import com.example.radhwen.snipeit.model.Rows;
+import com.example.radhwen.snipeit.model.StatusLabel;
+import com.example.radhwen.snipeit.model.StatusLabelRows;
 import com.example.radhwen.snipeit.net.ApiConnect;
 import com.example.radhwen.snipeit.services.AssetServices;
+import com.example.radhwen.snipeit.services.CompanieServices;
+import com.example.radhwen.snipeit.services.ModelServices;
+import com.example.radhwen.snipeit.services.StatusLabelServices;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,7 +44,13 @@ public class UpdateAsset extends AppCompatActivity {
 
     private String name;
 
+    private ModelRows modelRows;
+    private CompanieRows companieRows;
+    private StatusLabelRows statusLabelRows;
+
     private EditText assetName;
+
+    private Spinner companySpinner, modelSpinner, statusSpinner;
 
     private Button editBtn;
 
@@ -44,6 +63,10 @@ public class UpdateAsset extends AppCompatActivity {
         assetName = findViewById(R.id.edit_asset_name);
 
         editBtn = findViewById(R.id.edit_asset_button);
+
+        companySpinner = findViewById(R.id.asset_company_spinner_edit);
+        modelSpinner = findViewById(R.id.asset_model_spinner_edit);
+        statusSpinner = findViewById(R.id.asset_status_spinner_edit);
 
         sharedPreferences = getSharedPreferences("assetsPref", MODE_PRIVATE);
 
@@ -61,16 +84,179 @@ public class UpdateAsset extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateAsset(id, assetName.getText().toString());
+
+                name = assetName.getText().toString();
+                modelRows = (ModelRows) modelSpinner.getSelectedItem();
+                companieRows = (CompanieRows) companySpinner.getSelectedItem();
+                statusLabelRows = (StatusLabelRows) statusSpinner.getSelectedItem();
+
+                updateAsset(id, name, modelRows, companieRows, statusLabelRows);
+            }
+        });
+
+
+        //Load data to spinners
+
+        ModelServices services = ApiConnect.getClient().create(ModelServices.class);
+
+        Call<Model> call = services.getModels(API_KEY);
+
+        call.enqueue(new Callback<Model>() {
+            @Override
+            public void onResponse(Call<Model> call, Response<Model> response) {
+
+
+                final List<ModelRows> models = response.body().getModelRows();
+
+                final ArrayAdapter<ModelRows> modelAdapter = new ArrayAdapter<ModelRows>(UpdateAsset.this, android.R.layout.simple_list_item_1, models);
+
+                modelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                modelSpinner.setAdapter(modelAdapter);
+
+                modelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ModelRows modelRows = (ModelRows) parent.getSelectedItem();
+                        displayModel(modelRows);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                for (int i = 0; i < models.size(); i++) {
+                    Log.d(TAG_NAME, "Models Data Spinner Size: " + models.size());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Model> call, Throwable t) {
+                Log.e(TAG_NAME, "Failed to connect !");
+
+                Toast.makeText(UpdateAsset.this, "Failed to connect", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        CompanieServices companieServices = ApiConnect.getClient().create(CompanieServices.class);
+
+        Call<Companies> companiesCall = companieServices.getCompanies(API_KEY);
+
+        companiesCall.enqueue(new Callback<Companies>() {
+            @Override
+            public void onResponse(Call<Companies> call, Response<Companies> response) {
+                final List<CompanieRows> companieRows = response.body().getCompanieRows();
+
+                final ArrayAdapter<CompanieRows> companiesAdapter = new ArrayAdapter<CompanieRows>(UpdateAsset.this, android.R.layout.simple_list_item_1, companieRows);
+                companiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                companySpinner.setAdapter(companiesAdapter);
+
+                companySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        CompanieRows companyRows = (CompanieRows) parent.getSelectedItem();
+                        displayCompany(companyRows);
+
+                        Log.d(TAG_NAME, "Company item position " + companyRows);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                for (int i = 0; i < companieRows.size(); i++) {
+                    Log.d(TAG_NAME, "Companies Data Spinner Size: " + companieRows.size());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Companies> call, Throwable t) {
+                Log.e(TAG_NAME, "Failed to connect !");
+
+                Toast.makeText(UpdateAsset.this, "Failed to connect", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        StatusLabelServices labelServices = ApiConnect.getClient().create(StatusLabelServices.class);
+
+        Call<StatusLabel> statusCall = labelServices.getStatus(API_KEY);
+
+        statusCall.enqueue(new Callback<StatusLabel>() {
+            @Override
+            public void onResponse(Call<StatusLabel> call, Response<StatusLabel> response) {
+
+                List<StatusLabelRows> statusRows = response.body().getStatusLabelRows();
+
+                final ArrayAdapter<StatusLabelRows> statusAdapter = new ArrayAdapter<StatusLabelRows>(UpdateAsset.this, android.R.layout.simple_spinner_dropdown_item, statusRows);
+                statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                statusSpinner.setAdapter(statusAdapter);
+
+                statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        StatusLabelRows statusRows = (StatusLabelRows) parent.getSelectedItem();
+                        displayStatus(statusRows);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                for (int i = 0; i < statusRows.size(); i++) {
+                    Log.d(TAG_NAME, "Status Data Spinner Size: " + statusRows.size());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StatusLabel> call, Throwable t) {
+                Log.e(TAG_NAME, "Failed to connect !");
+
+                Toast.makeText(UpdateAsset.this, "Failed to connect", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private void getSelectedCompany(View view) {
+        CompanieRows companyRows = (CompanieRows) companySpinner.getSelectedItem();
+        displayCompany(companyRows);
+    }
 
-    private void updateAsset(int id, final String name) {
+    private void displayCompany(CompanieRows companyRows) {
+        String company = companyRows.getName();
+    }
+
+    private void getSelectedModel(View view) {
+        ModelRows model = (ModelRows) modelSpinner.getSelectedItem();
+        displayModel(model);
+    }
+
+
+    private void displayModel(ModelRows modelRows) {
+        String model = modelRows.getName();
+    }
+
+    private void getSelectedStatus(View view) {
+        StatusLabelRows statusLabelRows = (StatusLabelRows) statusSpinner.getSelectedItem();
+        displayStatus(statusLabelRows);
+    }
+
+    private void displayStatus(StatusLabelRows statusLabel) {
+        String status = statusLabel.getName();
+    }
+
+        //End load data to spinners
+
+
+    private void updateAsset(int id, final String name, ModelRows modelRows, CompanieRows companieRows, StatusLabelRows statusLabelRows) {
         AssetServices services = ApiConnect.getClient().create(AssetServices.class);
 
-        Call<Rows> call = services.updateAsset(API_KEY, id, name);
+        Call<Rows> call = services.updateAsset(API_KEY, id, name, modelRows.getId(), companieRows.getId(), statusLabelRows.getId());
 
         call.enqueue(new Callback<Rows>() {
             @Override

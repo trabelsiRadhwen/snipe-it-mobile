@@ -22,20 +22,25 @@ public interface AssetServices {
     @GET("hardware")
     Call<Asset> getAssets(@Header("Authorization") String api_key);
 
+    //@FormUrlEncoded
     @POST("hardware")
     Call<Rows> createAsset(@Header("Authorization") String api_key,
-                           @Query("name") String name,
-                           @Query("name") ModelRows model,
-                           @Query("name") CompanieRows company,
-                           @Query("name") StatusLabelRows status);
+                              @Query("name") String name,
+                              //@Query("asset_tag") String tag,
+                              @Query("model_id") int model,
+                              @Query("company_id") int company,
+                              @Query("status_id") int status);
 
     @FormUrlEncoded
     @PUT("hardware/{id}")
     Call<Rows> updateAsset(@Header("Authorization") String api_key,
-                                     @Path("id") int id,
-                                     @Field("name") String name);
+                           @Path("id") int id,
+                           @Field("name") String name,
+                           @Field("model_id") int model,
+                           @Field("company_id") int company,
+                           @Field("status_id") int status);
 
     @DELETE("hardware/{id}")
     Call<Rows> deleteAsset(@Header("Authorization") String api_key,
-                                     @Path("id") int id);
+                           @Path("id") int id);
 }

@@ -1,8 +1,10 @@
 package com.example.radhwen.snipeit.adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.radhwen.snipeit.R;
 import com.example.radhwen.snipeit.model.Rows;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -36,15 +39,34 @@ public class AssetAdapter extends ArrayAdapter<Rows> {
             listView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
         }
 
-        Rows rows = rowsList.get(position);
+        Rows rows = getItem(position);
 
-        TextView name = listView.findViewById(R.id.asset_name);
-        TextView tag = listView.findViewById(R.id.asset_tag);
-        //ImageView image = listView.findViewById(R.id.asset_image);
-
+        TextView name = (TextView) listView.findViewById(R.id.asset_name);
         name.setText(rows.getName());
+
+        TextView tag = (TextView) listView.findViewById(R.id.asset_tag);
         tag.setText(rows.getTag());
-        //image.setImageResource(rows.getImage());
+
+        ImageView imageStatus = (ImageView) listView.findViewById(R.id.image_status);
+
+        TextView status = (TextView) listView.findViewById(R.id.asset_status);
+        status.setText(rows.getStatusLabel().getStatusMeta());
+
+        if (status.getText().toString().equals("deployable")) {
+            imageStatus.setImageResource(R.drawable.deployable);
+        }else if (status.getText().toString().equals("pending")){
+            imageStatus.setImageResource(R.drawable.pending);
+        }else if (status.getText().toString().equals("deployed")) {
+            imageStatus.setImageResource(R.drawable.deployed);
+        } else if (status.getText().toString().equals("archived")){
+            imageStatus.setImageResource(R.drawable.archived);
+        }
+
+        ImageView image = (ImageView) listView.findViewById(R.id.asset_image);
+        String imageVal = rows.getImage();
+        Picasso.get().load(imageVal).into(image);
+        Log.d("Asset Adapter", "ImageVal Response: " +imageVal);
+
 
         return listView;
     }

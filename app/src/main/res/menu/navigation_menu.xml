@@ -9,4 +9,7 @@
         android:id="@+id/companies_item"
         android:title="Companies" />
 
+    <item
+        android:id="@+id/user_item"
+        android:title="Users"/>
 </menu>

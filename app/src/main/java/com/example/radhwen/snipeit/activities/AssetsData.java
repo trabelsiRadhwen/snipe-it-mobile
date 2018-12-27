@@ -3,6 +3,8 @@ package com.example.radhwen.snipeit.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,9 +12,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.radhwen.snipeit.MainActivity;
 import com.example.radhwen.snipeit.R;
 import com.example.radhwen.snipeit.model.Category;
 import com.example.radhwen.snipeit.model.CategoryRows;
@@ -24,6 +29,7 @@ import com.example.radhwen.snipeit.model.StatusLabel;
 import com.example.radhwen.snipeit.model.StatusLabelRows;
 import com.example.radhwen.snipeit.net.ApiConnect;
 import com.example.radhwen.snipeit.services.AssetServices;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -49,45 +55,57 @@ public class AssetsData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assets_data);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         sharedPreferences = getSharedPreferences("assetsPref", MODE_PRIVATE);
 
         TextView name = (TextView) findViewById(R.id.asset_name_data);
-
-        TextView tag = (TextView) findViewById(R.id.asset_tag_data);
-
-        TextView model = (TextView) findViewById(R.id.asset_model_data);
-
-        TextView category = (TextView) findViewById(R.id.asset_category_data);
-
-        TextView status = (TextView) findViewById(R.id.asset_status_data);
-
-        TextView company = (TextView) findViewById(R.id.asset_company_data);
-
-        idAsset = sharedPreferences.getInt("id", 0);
-
         String asset = sharedPreferences.getString("name", "");
-
-        String tag_data = sharedPreferences.getString("tag", "");
-
-        String model_data = sharedPreferences.getString("model","");
-
-        String category_data = sharedPreferences.getString("category", "");
-
-        String status_data = sharedPreferences.getString("status", "");
-
-        String company_data = sharedPreferences.getString("company", "");
-
         name.setText(asset);
 
+        TextView tag = (TextView) findViewById(R.id.asset_tag_data);
+        String tag_data = sharedPreferences.getString("tag", "");
         tag.setText(tag_data);
 
+        TextView model = (TextView) findViewById(R.id.asset_model_data);
+        String model_data = sharedPreferences.getString("model","");
         model.setText(model_data);
 
+        TextView category = (TextView) findViewById(R.id.asset_category_data);
+        String category_data = sharedPreferences.getString("category", "");
         category.setText(category_data);
 
+        TextView status = (TextView) findViewById(R.id.asset_status_data);
+        String status_data = sharedPreferences.getString("status", "");
         status.setText(status_data);
 
+        TextView statusMeta = (TextView) findViewById(R.id.asset_status_meta_data);
+        String status_meta= sharedPreferences.getString("statusMeta", "");
+        statusMeta.setText(status_meta);
+
+        if (status_data.equals("Ready to Deploy") && status_meta.equals("deployable")) {
+            status.setTextColor(Color.parseColor("#388E3C"));
+            statusMeta.setTextColor(Color.parseColor("#388E3C"));
+        }else if (status_data.equals("Ready to Deploy") && status_meta.equals("deployed")) {
+            status.setTextColor(Color.parseColor("#0288D1"));
+            statusMeta.setTextColor(Color.parseColor("#0288D1"));
+        }else if (status_data.equals("Pending") && status_meta.equals("pending")) {
+            status.setTextColor(Color.parseColor("#F57C00"));
+            statusMeta.setVisibility(View.INVISIBLE);
+        }else if (status_data.equals("Archived") && status_meta.equals("archived")){
+            status.setTextColor(Color.parseColor("#DD2C00"));
+            statusMeta.setVisibility(View.INVISIBLE);
+        }
+
+        TextView company = (TextView) findViewById(R.id.asset_company_data);
+        String company_data = sharedPreferences.getString("company", "");
         company.setText(company_data);
+
+        ImageView image = (ImageView) findViewById(R.id.asset_image_data);
+        String imageData = sharedPreferences.getString("image", "");
+        Picasso.get().load(imageData).into(image);
+
+        idAsset = sharedPreferences.getInt("id", 0);
 
         /*Intent intent = getIntent();
 
@@ -151,6 +169,10 @@ public class AssetsData extends AppCompatActivity {
                 Intent intent = new Intent(AssetsData.this, UpdateAsset.class);
                 startActivity(intent);
                 break;
+
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
 
                 default:
 

@@ -1,5 +1,6 @@
 package com.example.radhwen.snipeit;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,11 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.radhwen.snipeit.activities.AssetsData;
 import com.example.radhwen.snipeit.activities.CompanieActivity;
 import com.example.radhwen.snipeit.activities.NewAsset;
+import com.example.radhwen.snipeit.activities.UsersActivity;
 import com.example.radhwen.snipeit.adapters.AssetAdapter;
 import com.example.radhwen.snipeit.model.Asset;
 import com.example.radhwen.snipeit.model.Category;
@@ -83,9 +86,16 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
-                if (id == R.id.companies_item) {
+                switch (id) {
+
+                    case R.id.companies_item:
                     Intent companyIntent = new Intent(MainActivity.this, CompanieActivity.class);
                     startActivity(companyIntent);
+                    break;
+
+                    case R.id.user_item:
+                        Intent userIntent = new Intent(MainActivity.this, UsersActivity.class);
+                        startActivity(userIntent);
                 }
 
                 return true;
@@ -110,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<Asset>() {
             @Override
-            public void onResponse(Call<Asset> call, Response<Asset> response) {
+            public void onResponse(Call<Asset> call, final Response<Asset> response) {
 
                 final List<Rows> list = response.body().getRows();
 
@@ -124,18 +134,31 @@ public class MainActivity extends AppCompatActivity {
 
                         int idAsset = list.get(position).getId();
                         String name = list.get(position).getName();
+                        String image = list.get(position).getImage();
                         String tag = list.get(position).getTag();
                         ModelRows model = list.get(position).getModel();
                         CategoryRows category = list.get(position).getCategory();
                         StatusLabelRows status = list.get(position).getStatusLabel();
+                        //List<StatusLabelRows> statusLabelRows = list.get(position).getStatusRows();
                         CompanieRows company = list.get(position).getCompany();
+
+                        /*for (StatusLabelRows statusLabelRows1 : statusLabelRows) {
+                            String meta = statusLabelRows1.getStatusMeta();
+
+                            editor.putString("meta", meta);
+
+                            Log.d(TAG_NAME, "Status meta value:  " +meta);
+
+                        }*/
 
                         editor.putInt("id", idAsset);
                         editor.putString("name", name);
+                        editor.putString("image", image);
                         editor.putString("tag", tag);
                         editor.putString("model", String.valueOf(model));
                         editor.putString("category", String.valueOf(category));
-                        editor.putString("status", String.valueOf(status));
+                        editor.putString("status", String.valueOf(status.getName()));
+                        editor.putString("statusMeta", String.valueOf(status.getStatusMeta()));
                         editor.putString("company", String.valueOf(company));
 
                         editor.apply();

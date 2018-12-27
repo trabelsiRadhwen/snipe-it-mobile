@@ -3,81 +3,147 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp"
     tools:context=".activities.AssetsData">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name: "
-        android:textSize="15dp"
-        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/asset_image_data"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:src="@drawable/ic_launcher_background" />
 
-    <TextView
-        android:id="@+id/asset_name_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tag: "
-        android:textSize="15dp"
-        android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/asset_tag_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name: "
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Model: "
-        android:textSize="15dp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/asset_name_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@id/name"
+                android:layout_toRightOf="@id/name"
+                android:text="name"/>
 
-    <TextView
-        android:id="@+id/asset_model_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tag: "
+                android:textSize="15dp"
+                android:layout_marginRight="10dp"
+                android:textStyle="bold"
+                android:layout_below="@id/asset_name_data"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Category: "
-        android:textSize="15dp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/asset_tag_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/tag"
+                android:layout_alignBottom="@id/tag"
+                android:text="tag"/>
 
-    <TextView
-        android:id="@+id/asset_category_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/model"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Model: "
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"
+                android:layout_below="@id/tag"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Status: "
-        android:textSize="15dp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/asset_model_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/asset_tag_data"
+                android:layout_toRightOf="@id/model"
+                android:layout_alignBottom="@id/model"
+                android:text="model"/>
 
-    <TextView
-        android:id="@+id/asset_status_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category: "
+                android:textSize="15dp"
+                android:layout_marginRight="10dp"
+                android:textStyle="bold"
+                android:layout_below="@id/model"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Company: "
-        android:textSize="15dp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/asset_category_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/category"
+                android:layout_below="@id/asset_model_data"
+                android:layout_alignBottom="@id/category"
+                android:text="category"/>
 
-    <TextView
-        android:id="@+id/asset_company_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status: "
+                android:textSize="15dp"
+                android:layout_marginRight="10dp"
+                android:textStyle="bold"
+                android:layout_below="@id/category"/>
+
+            <TextView
+                android:id="@+id/asset_status_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/asset_category_data"
+                android:layout_toRightOf="@id/status"
+                android:layout_alignBottom="@id/status"
+                android:text="status"/>
+
+            <TextView
+                android:id="@+id/asset_status_meta_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/asset_category_data"
+                android:layout_toRightOf="@id/asset_status_data"
+                android:text="status"/>
+
+            <TextView
+                android:id="@+id/company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Company: "
+                android:textSize="15dp"
+                android:layout_marginRight="10dp"
+                android:textStyle="bold"
+                android:layout_below="@id/status"/>
+
+            <TextView
+                android:id="@+id/asset_company_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/asset_status_data"
+                android:layout_toRightOf="@id/company"
+                android:layout_alignBottom="@id/company"
+                android:text="company"/>
+
+        </RelativeLayout>
+    </ScrollView>
 
 </LinearLayout>

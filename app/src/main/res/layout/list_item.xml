@@ -1,23 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/list_result"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="horizontal"
+    android:minHeight="88dp">
 
-    <TextView
-        android:id="@+id/asset_name"
+    <ImageView
+        android:id="@+id/asset_image"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:src="@drawable/ic_launcher_background"/>
+
+    <LinearLayout
+        android:id="@+id/text_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="kdvnkdnv"
-        android:textSize="15dp"
-        android:textStyle="bold"/>
+        android:layout_marginLeft="5dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/asset_tag"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="djnjdnvcd" />
+        <TextView
+            android:id="@+id/asset_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="bottom"
+            android:text="jvnjnvjdvn"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/asset_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="top"
+            android:text="jvnjnvjdvn"
+            android:layout_below="@id/asset_name"
+            android:layout_toRightOf="@id/asset_image"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:id="@+id/image_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/deployable"
+                    android:layout_marginRight="5dp"/>
+
+                <TextView
+                    android:id="@+id/asset_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Deployble"
+                    android:layout_alignBottom="@id/image_status"
+                    android:layout_toRightOf="@id/image_status" />
+            </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

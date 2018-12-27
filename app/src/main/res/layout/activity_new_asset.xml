@@ -1,96 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".activities.NewAsset">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/company_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Company"
-            android:layout_marginBottom="10dp"
-            android:textSize="15dp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/asset_company_spinner"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/model_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Model"
-            android:layout_marginBottom="10dp"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
-
-        <Spinner
-            android:id="@+id/asset_model_spinner"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/status_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Asset Status Label"
-            android:layout_marginBottom="10dp"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
-
-        <Spinner
-            android:id="@+id/asset_status_spinner"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/company_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Company"
+                android:textSize="15dp"
+                android:layout_marginRight="10dp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/asset_company_spinner"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/company_text"
+                android:layout_alignBottom="@id/company_text"/>
+
+            <TextView
+                android:id="@+id/model_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/company_text"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Model"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/asset_model_spinner"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/asset_company_spinner"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/model_text"
+                android:layout_alignBottom="@id/model_text"/>
+
+            <TextView
+                android:id="@+id/status_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/model_text"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="10dp"
+                android:text="Asset Status Label"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/asset_status_spinner"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/asset_model_spinner"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/status_text"
+                android:layout_alignBottom="@id/status_text"/>
+
+            <TextView
+                android:id="@+id/name_asset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/status_text"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
                 android:text="Asset Name"
                 android:textSize="15dp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="20dp"/>
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/asset_name_edit_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/asset_status_spinner"
+                android:layout_toRightOf="@id/name_asset"
                 android:focusableInTouchMode="true"
                 android:hint="asset name"
                 android:selectAllOnFocus="false" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/send_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_asset"
+                android:layout_marginTop="20dp"
+                android:text="Add" />
 
-        <Button
-            android:id="@+id/send_button"
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"/>
+        </RelativeLayout>
 
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

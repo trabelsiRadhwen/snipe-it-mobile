@@ -1,8 +1,10 @@
 package com.example.radhwen.snipeit.activities;
 
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,7 +38,7 @@ public class NewAsset extends AppCompatActivity {
     private Spinner companySpinner;
     private Spinner modelSpinner;
     private Spinner statusSpinner;
-    private EditText assetName;
+    private EditText assetName, assetTag;
     private Button addBtn;
 
     private String name;
@@ -53,6 +55,8 @@ public class NewAsset extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_asset);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         companySpinner = findViewById(R.id.asset_company_spinner);
         modelSpinner = findViewById(R.id.asset_model_spinner);
         statusSpinner = findViewById(R.id.asset_status_spinner);
@@ -66,10 +70,11 @@ public class NewAsset extends AppCompatActivity {
             public void onClick(View v) {
 
                 //Rows rows = new Rows(
-                        name = assetName.getText().toString();
-                        modelRows = (ModelRows) modelSpinner.getSelectedItem();
-                        companieRows = (CompanieRows) companySpinner.getSelectedItem();
-                        statusLabelRows = (StatusLabelRows) statusSpinner.getSelectedItem();
+                name = assetName.getText().toString();
+                //tag = assetTag.getText().toString();
+                modelRows = (ModelRows) modelSpinner.getSelectedItem();
+                companieRows = (CompanieRows) companySpinner.getSelectedItem();
+                statusLabelRows = (StatusLabelRows) statusSpinner.getSelectedItem();
                 //);
 
                 sendAssetData(name, modelRows, companieRows, statusLabelRows);
@@ -107,8 +112,8 @@ public class NewAsset extends AppCompatActivity {
                     }
                 });
 
-                for (int i=0; i<models.size(); i++) {
-                    Log.d(TAG_NAME, "Models Data Spinner Size: " +models.size());
+                for (int i = 0; i < models.size(); i++) {
+                    Log.d(TAG_NAME, "Models Data Spinner Size: " + models.size());
                 }
             }
 
@@ -138,6 +143,8 @@ public class NewAsset extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         CompanieRows companyRows = (CompanieRows) parent.getSelectedItem();
                         displayCompany(companyRows);
+
+                        Log.d(TAG_NAME, "Company item position " + companyRows);
                     }
 
                     @Override
@@ -146,8 +153,8 @@ public class NewAsset extends AppCompatActivity {
                     }
                 });
 
-                for (int i=0; i<companieRows.size(); i++) {
-                    Log.d(TAG_NAME, "Companies Data Spinner Size: " +companieRows.size());
+                for (int i = 0; i < companieRows.size(); i++) {
+                    Log.d(TAG_NAME, "Companies Data Spinner Size: " + companieRows.size());
                 }
             }
 
@@ -186,8 +193,8 @@ public class NewAsset extends AppCompatActivity {
                     }
                 });
 
-                for (int i=0; i<statusRows.size(); i++) {
-                    Log.d(TAG_NAME, "Status Data Spinner Size: " +statusRows.size());
+                for (int i = 0; i < statusRows.size(); i++) {
+                    Log.d(TAG_NAME, "Status Data Spinner Size: " + statusRows.size());
                 }
             }
 
@@ -228,10 +235,12 @@ public class NewAsset extends AppCompatActivity {
         String status = statusLabel.getName();
     }
 
-    private void sendAssetData(String name, ModelRows modelRows,CompanieRows companieRows,StatusLabelRows statusLabelRows) {
+    private void sendAssetData(String name, ModelRows modelRows, CompanieRows companieRows, StatusLabelRows statusLabelRows) {
         AssetServices assetServices = ApiConnect.getClient().create(AssetServices.class);
 
-        Call<Rows> call = assetServices.createAsset(API_KEY ,name, modelRows, companieRows, statusLabelRows);
+        Log.d(TAG_NAME, "Results Post method: \n" + name + "\n" + modelRows.getId() + "\n" + companieRows.getId() + "\n" + statusLabelRows.getId());
+
+        Call<Rows> call = assetServices.createAsset(API_KEY, name, modelRows.getId(), companieRows.getId(), statusLabelRows.getId());
 
         call.enqueue(new Callback<Rows>() {
             @Override
@@ -240,10 +249,11 @@ public class NewAsset extends AppCompatActivity {
 
                 Rows result = response.body();
 
-                Log.d(TAG_NAME, "Form Values: \n"
-                        +"Hardware id: " +result.getId() +"\n"
-                        +"Name: " +result.getName() +"\n"
-                        +"Model: " +result.getModel()
+                Log.d(TAG_NAME, "Form Values: \n" + result
+                        /*+ "Hardware id: " + result.getId() + "\n"
+                        + "Name: " + result.getName() + "\n"
+                        + "Model: " + result.getModel() + "\n"
+                        + "Company: " + result.getCompany()*/
                 );
             }
 
@@ -251,8 +261,20 @@ public class NewAsset extends AppCompatActivity {
             public void onFailure(Call<Rows> call, Throwable t) {
                 Toast.makeText(NewAsset.this, "Something wrong !", Toast.LENGTH_SHORT).show();
 
-                Log.d(TAG_NAME, "Failed to add new Asset !");
+                Log.d(TAG_NAME, "Failed to add new Asset !" + t.getMessage());
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

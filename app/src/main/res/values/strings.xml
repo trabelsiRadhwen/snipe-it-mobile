@@ -7,6 +7,8 @@
 
     <string name="comapnie_activity">Companies</string>
 
+    <string name="user_activity">Users</string>
+
     <string name="add_asset">Add Asset</string>
 
     <string name="add_company">Add Company</string>
@@ -26,4 +28,6 @@
     <string name="delete_asset_dialog_message">Are you sure you want to delete this item?</string>
 
     <string name="delete_asset_dialog_title">Delete Asset</string>
+
+    <string name="user_assigned_assets">User\'s Assets</string>
 </resources>

@@ -23,10 +23,11 @@ public class StatusLabelRows implements Serializable {
     @Expose
     private String statusMeta;
 
-    public StatusLabelRows(int id, String name, String statusType) {
+    public StatusLabelRows(int id, String name, String statusType, String statusMeta) {
         this.id = id;
         this.name = name;
         this.statusType = statusType;
+        this.statusMeta = statusMeta;
     }
 
     public int getId() {
@@ -39,6 +40,10 @@ public class StatusLabelRows implements Serializable {
 
     public String getStatusType() {
         return statusType;
+    }
+
+    public String getStatusMeta() {
+        return statusMeta;
     }
 
     public String toString() {

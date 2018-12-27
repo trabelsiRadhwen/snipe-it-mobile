@@ -3,6 +3,9 @@ package com.example.radhwen.snipeit.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
+
 public class Rows {
 
     @SerializedName("id")
@@ -12,6 +15,14 @@ public class Rows {
     @SerializedName("name")
     @Expose
     private String name;
+
+    @SerializedName("image")
+    @Expose
+    private String image;
+
+    private int mImageResourceId = NO_IMAGE_PROVIDER;
+
+    private static final int NO_IMAGE_PROVIDER = -1;
 
     @SerializedName("asset_tag")
     @Expose
@@ -34,7 +45,6 @@ public class Rows {
     private StatusLabelRows statusLabel;
 
 
-
     public Rows(String name, ModelRows model, CompanieRows company, StatusLabelRows statusLabel) {
         this.name = name;
         this.model = model;
@@ -42,9 +52,10 @@ public class Rows {
         this.statusLabel = statusLabel;
     }
 
-    public Rows(Integer id, String name, String tag, ModelRows model, CategoryRows category, CompanieRows company, StatusLabelRows statusLabel) {
+    public Rows(Integer id, String name, String image, String tag, ModelRows model, CategoryRows category, CompanieRows company, StatusLabelRows statusLabel) {
         this.id = id;
         this.name = name;
+        this.image = image;
         this.tag = tag;
         this.model = model;
         this.category = category;
@@ -78,5 +89,14 @@ public class Rows {
 
     public CompanieRows getCompany() {
         return company;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public boolean hasImage()
+    {
+        return mImageResourceId != NO_IMAGE_PROVIDER;
     }
 }
