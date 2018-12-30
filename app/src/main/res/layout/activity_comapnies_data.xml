@@ -8,16 +8,80 @@
     android:padding="10dp"
     tools:context=".activities.ComapniesData">
 
-    <TextView
-        android:text="Name:"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/company_name_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/name"
+            android:text="Name:"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:id="@+id/company_name_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/name"
+            android:text="company"/>
+
+        <TextView
+            android:id="@+id/assets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assets Count: "
+            android:layout_marginRight="10dp"
+            android:layout_below="@id/name"
+            android:layout_alignParentLeft="true"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/assets_count_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/company_name_data"
+            android:layout_toRightOf="@id/assets"
+            android:text="15"/>
+
+        <TextView
+            android:id="@+id/licences"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Licences Count: "
+            android:layout_below="@id/assets"
+            android:layout_alignParentLeft="true"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/licences_count_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="licences"
+            android:layout_below="@id/assets_count_data"
+            android:layout_toRightOf="@id/licences"/>
+
+        <TextView
+            android:id="@+id/accessories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accessories Count: "
+            android:layout_below="@id/licences"
+            android:layout_alignParentLeft="true"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/accessories_count_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="accessories"
+            android:layout_below="@id/licences_count_data"
+            android:layout_toRightOf="@id/accessories"/>
+    </RelativeLayout>
 
 </LinearLayout>

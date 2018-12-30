@@ -33,6 +33,12 @@ public class ComapniesData extends AppCompatActivity {
 
     private String company_data;
 
+    private Integer assets_data;
+
+    private Integer licences_data;
+
+    private Integer accessories_data;
+
     private int idComp;
 
     @Override
@@ -41,7 +47,12 @@ public class ComapniesData extends AppCompatActivity {
         setContentView(R.layout.activity_comapnies_data);
 
         TextView company = (TextView) findViewById(R.id.company_name_data);
-        //TextView assetsCount = (TextView) findViewById(R.id.company_assets_count_data);
+
+        TextView assetsCount = (TextView) findViewById(R.id.assets_count_data);
+
+        TextView licencesCount = (TextView) findViewById(R.id.licences_count_data);
+
+        TextView accessoriesCount = (TextView) findViewById(R.id.accessories_count_data);
 
         sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
 
@@ -49,7 +60,31 @@ public class ComapniesData extends AppCompatActivity {
 
         company_data = sharedPreferences.getString("name", "");
 
+        assets_data = sharedPreferences.getInt("assets", 0);
+
+        licences_data = sharedPreferences.getInt("licences", 0);
+
+        accessories_data = sharedPreferences.getInt("accessories", 0);
+
         company.setText(company_data);
+
+        if (assets_data == 0) {
+            assetsCount.setText(Integer.toString(0));
+        }else{
+            assetsCount.setText(Integer.toString(assets_data));
+        }
+
+        if (licences_data == 0) {
+            licencesCount.setText(Integer.toString(0));
+        }else{
+            licencesCount.setText(Integer.toString(licences_data));
+        }
+
+        if (accessories_data == 0) {
+            accessoriesCount.setText(Integer.toString(0));
+        }else{
+            accessoriesCount.setText(Integer.toString(accessories_data));
+        }
 
         /*Intent intent = getIntent();
 
@@ -66,6 +101,7 @@ public class ComapniesData extends AppCompatActivity {
         Log.d(TAG_NAME, "Intent Response: \n"
                 +"Id: " +idComp +"\n"
                 +"Company Name: " +company_data +"\n"
+                +"Assets Count: " +assets_data
                 //+"Assets Count: " +assets_count +"\n"
         );
     }

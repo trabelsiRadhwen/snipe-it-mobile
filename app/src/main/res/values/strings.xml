@@ -30,4 +30,6 @@
     <string name="delete_asset_dialog_title">Delete Asset</string>
 
     <string name="user_assigned_assets">User\'s Assets</string>
+
+    <string name="login">Login</string>
 </resources>

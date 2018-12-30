@@ -19,22 +19,26 @@ public class CompanieRows implements Serializable {
     @Expose
     private Integer assetsCount;
 
-    @SerializedName("licences_count")
+    @SerializedName("licenses_count")
     @Expose
     private Integer licencesCount;
+
+    @SerializedName("accessories_count")
+    @Expose
+    private Integer accessoriesCount;
 
     public CompanieRows(String name) {
         this.name = name;
     }
 
-    public CompanieRows(int id, String name, Integer assetsCount, Integer licencesCount) {
+    public CompanieRows(Integer id, String name, Integer assetsCount, Integer licencesCount) {
         this.id = id;
         this.name = name;
         this.assetsCount = assetsCount;
         this.licencesCount = licencesCount;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -48,6 +52,22 @@ public class CompanieRows implements Serializable {
 
     public Integer getLicencesCount() {
         return licencesCount;
+    }
+
+    public void setAssetsCount(Integer assetsCount) {
+        this.assetsCount = assetsCount;
+    }
+
+    public void setLicencesCount(Integer licencesCount) {
+        this.licencesCount = licencesCount;
+    }
+
+    public Integer getAccessoriesCount() {
+        return accessoriesCount;
+    }
+
+    public void setAccessoriesCount(Integer accessoriesCount) {
+        this.accessoriesCount = accessoriesCount;
     }
 
     public String toString() {

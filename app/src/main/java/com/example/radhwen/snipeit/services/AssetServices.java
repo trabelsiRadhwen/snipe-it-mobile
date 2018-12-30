@@ -22,14 +22,17 @@ public interface AssetServices {
     @GET("hardware")
     Call<Asset> getAssets(@Header("Authorization") String api_key);
 
-    //@FormUrlEncoded
     @POST("hardware")
     Call<Rows> createAsset(@Header("Authorization") String api_key,
-                              @Query("name") String name,
-                              //@Query("asset_tag") String tag,
-                              @Query("model_id") int model,
-                              @Query("company_id") int company,
-                              @Query("status_id") int status);
+                           @Query("name") String name,
+                           @Query("serial") String serial,
+                           @Query("order_number") String order,
+                           @Query("purchase_cost") String cost,
+                           //@Query("asset_tag") String tag,
+                           @Query("model_id") int model,
+                           @Query("company_id") int company,
+                           @Query("status_id") int status,
+                           @Query("note") String note);
 
     @FormUrlEncoded
     @PUT("hardware/{id}")

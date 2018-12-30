@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
     private AssetAdapter adapter;
 
+    private ProgressBar progress_circular;
+
     private FloatingActionButton fabAddAsset;
 
     @Override
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fabAddAsset = (FloatingActionButton) findViewById(R.id.fab_add_asset);
+
+        progress_circular = findViewById(R.id.progress_circular);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -121,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<Asset>() {
             @Override
             public void onResponse(Call<Asset> call, final Response<Asset> response) {
+
+                progress_circular.setVisibility(View.GONE);
 
                 final List<Rows> list = response.body().getRows();
 
@@ -194,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Asset> call, Throwable t) {
+                progress_circular.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Failed to connect !", Toast.LENGTH_SHORT).show();
             }
         });

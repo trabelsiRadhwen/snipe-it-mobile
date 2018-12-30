@@ -12,11 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activities.CompanieActivity"
@@ -24,8 +19,7 @@
         <activity
             android:name=".activities.AssetsData"
             android:label="@string/asset_data_detail"
-            android:parentActivityName=".MainActivity" >
-
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.radhwen.snipeit.MainActivity" />
@@ -59,8 +53,16 @@
             android:name=".activities.UsersActivity"
             android:label="@string/user_activity" />
         <activity android:name=".activities.UserData" />
-        <activity android:name=".activities.UserAssignedAssets"
-            android:label="@string/user_assigned_assets"></activity>
+        <activity
+            android:name=".activities.UserAssignedAssets"
+            android:label="@string/user_assigned_assets" />
+        <activity android:name=".activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

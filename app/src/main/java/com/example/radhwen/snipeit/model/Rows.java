@@ -20,13 +20,29 @@ public class Rows {
     @Expose
     private String image;
 
-    private int mImageResourceId = NO_IMAGE_PROVIDER;
-
-    private static final int NO_IMAGE_PROVIDER = -1;
-
     @SerializedName("asset_tag")
     @Expose
     private String tag;
+
+    @SerializedName("serial")
+    @Expose
+    private String serial;
+
+    @SerializedName("notes")
+    @Expose
+    private String notes;
+
+    @SerializedName("order_number")
+    @Expose
+    private String orderNumber;
+
+    @SerializedName("warranty_months")
+    @Expose
+    private String warrantyMonths;
+
+    @SerializedName("purchase_cost")
+    @Expose
+    private String purchaseCost;
 
     @SerializedName("model")
     @Expose
@@ -44,19 +60,26 @@ public class Rows {
     @Expose
     private StatusLabelRows statusLabel;
 
-
-    public Rows(String name, ModelRows model, CompanieRows company, StatusLabelRows statusLabel) {
+    public Rows(String name, String serial, String notes, String orderNumber, String purchaseCost, ModelRows model, CategoryRows category, CompanieRows company, StatusLabelRows statusLabel) {
         this.name = name;
+        this.serial = serial;
+        this.notes = notes;
+        this.orderNumber = orderNumber;
+        this.purchaseCost = purchaseCost;
         this.model = model;
+        this.category = category;
         this.company = company;
         this.statusLabel = statusLabel;
     }
 
-    public Rows(Integer id, String name, String image, String tag, ModelRows model, CategoryRows category, CompanieRows company, StatusLabelRows statusLabel) {
-        this.id = id;
+    public Rows(String name, String tag, String serial, String notes, String orderNumber, String warrantyMonths, String purchaseCost, ModelRows model, CategoryRows category, CompanieRows company, StatusLabelRows statusLabel) {
         this.name = name;
-        this.image = image;
         this.tag = tag;
+        this.serial = serial;
+        this.notes = notes;
+        this.orderNumber = orderNumber;
+        this.warrantyMonths = warrantyMonths;
+        this.purchaseCost = purchaseCost;
         this.model = model;
         this.category = category;
         this.company = company;
@@ -91,12 +114,28 @@ public class Rows {
         return company;
     }
 
+    public String getSerial() {
+        return serial;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public String getWarrantyMonths() {
+        return warrantyMonths;
+    }
+
+    public String getPurchaseCost() {
+        return purchaseCost;
+    }
+
     public String getImage() {
         return image;
     }
 
-    public boolean hasImage()
-    {
-        return mImageResourceId != NO_IMAGE_PROVIDER;
-    }
 }

@@ -53,7 +53,7 @@ public class AssetAdapter extends ArrayAdapter<Rows> {
         status.setText(rows.getStatusLabel().getStatusMeta());
 
         if (status.getText().toString().equals("deployable")) {
-            imageStatus.setImageResource(R.drawable.deployable);
+            imageStatus.setImageResource(R.drawable.deployable2);
         }else if (status.getText().toString().equals("pending")){
             imageStatus.setImageResource(R.drawable.pending);
         }else if (status.getText().toString().equals("deployed")) {

@@ -6,4 +6,8 @@
 
     <color name="parent_layout_background">#EEEEEE</color>
     <color name="child_layout_background">#FFFFFF</color>
+
+    <color name="status_meta_deployed_background_color">#E0E0E0</color>
+    <color name="status_meta_color">#212121</color>
+
 </resources>

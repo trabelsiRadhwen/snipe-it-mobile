@@ -88,7 +88,8 @@ public class AssetsData extends AppCompatActivity {
             statusMeta.setTextColor(Color.parseColor("#388E3C"));
         }else if (status_data.equals("Ready to Deploy") && status_meta.equals("deployed")) {
             status.setTextColor(Color.parseColor("#0288D1"));
-            statusMeta.setTextColor(Color.parseColor("#0288D1"));
+            statusMeta.setTextColor(Color.parseColor("#212121"));
+            statusMeta.setBackgroundResource(R.color.status_meta_deployed_background_color);
         }else if (status_data.equals("Pending") && status_meta.equals("pending")) {
             status.setTextColor(Color.parseColor("#F57C00"));
             statusMeta.setVisibility(View.INVISIBLE);

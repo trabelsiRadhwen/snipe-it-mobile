@@ -3,6 +3,8 @@ package com.example.radhwen.snipeit.activities;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,13 +37,13 @@ import retrofit2.Response;
 
 public class NewAsset extends AppCompatActivity {
 
-    private Spinner companySpinner;
-    private Spinner modelSpinner;
-    private Spinner statusSpinner;
-    private EditText assetName, assetTag;
-    private Button addBtn;
+    private AppCompatSpinner companySpinner;
+    private AppCompatSpinner modelSpinner;
+    private AppCompatSpinner statusSpinner;
+    private EditText assetName, assetTag, assetCost, assetNote, assetOrder, assetSerial;
+    private AppCompatButton addBtn;
 
-    private String name;
+    private String name, serial, order, cost, note;
     private ModelRows modelRows;
     private CompanieRows companieRows;
     private StatusLabelRows statusLabelRows;
@@ -62,6 +64,10 @@ public class NewAsset extends AppCompatActivity {
         statusSpinner = findViewById(R.id.asset_status_spinner);
 
         assetName = findViewById(R.id.asset_name_edit_text);
+        assetNote = findViewById(R.id.asset_note_edit_text);
+        assetOrder = findViewById(R.id.asset_order_number_edit_text);
+        assetSerial = findViewById(R.id.asset_serial_edit_text);
+        assetCost = findViewById(R.id.asset_purchase_cost_edit_text);
 
         addBtn = findViewById(R.id.send_button);
 
@@ -71,13 +77,17 @@ public class NewAsset extends AppCompatActivity {
 
                 //Rows rows = new Rows(
                 name = assetName.getText().toString();
+                serial = assetSerial.getText().toString();
+                order = assetOrder.getText().toString();
+                cost = assetCost.getText().toString();
                 //tag = assetTag.getText().toString();
                 modelRows = (ModelRows) modelSpinner.getSelectedItem();
                 companieRows = (CompanieRows) companySpinner.getSelectedItem();
                 statusLabelRows = (StatusLabelRows) statusSpinner.getSelectedItem();
+                note = assetNote.getText().toString();
                 //);
 
-                sendAssetData(name, modelRows, companieRows, statusLabelRows);
+                sendAssetData(name, serial, order, cost, modelRows, companieRows, statusLabelRows, note);
 
             }
         });
@@ -235,12 +245,12 @@ public class NewAsset extends AppCompatActivity {
         String status = statusLabel.getName();
     }
 
-    private void sendAssetData(String name, ModelRows modelRows, CompanieRows companieRows, StatusLabelRows statusLabelRows) {
+    private void sendAssetData(String name, String serial, String order, String cost, ModelRows modelRows, CompanieRows companieRows, StatusLabelRows statusLabelRows, String note) {
         AssetServices assetServices = ApiConnect.getClient().create(AssetServices.class);
 
         Log.d(TAG_NAME, "Results Post method: \n" + name + "\n" + modelRows.getId() + "\n" + companieRows.getId() + "\n" + statusLabelRows.getId());
 
-        Call<Rows> call = assetServices.createAsset(API_KEY, name, modelRows.getId(), companieRows.getId(), statusLabelRows.getId());
+        Call<Rows> call = assetServices.createAsset(API_KEY, name, serial, order, cost, modelRows.getId(), companieRows.getId(), statusLabelRows.getId(), note);
 
         call.enqueue(new Callback<Rows>() {
             @Override

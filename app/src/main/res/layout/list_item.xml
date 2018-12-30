@@ -47,7 +47,7 @@
                     android:id="@+id/image_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/deployable"
+                    android:src="@drawable/deployable2"
                     android:layout_marginRight="5dp"/>
 
                 <TextView

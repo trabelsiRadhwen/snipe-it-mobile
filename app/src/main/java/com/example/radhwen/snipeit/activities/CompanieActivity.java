@@ -81,6 +81,12 @@ public class CompanieActivity extends AppCompatActivity {
 
                         String company = list.get(position).getName();
 
+                        int assets = list.get(position).getAssetsCount();
+
+                        int licences = list.get(position).getLicencesCount();
+
+                        int accessories = list.get(position).getAccessoriesCount();
+
                         int idComp = list.get(position).getId();
 
                         //Integer assetsCount = list.get(position).getAssetsCount();
@@ -88,6 +94,12 @@ public class CompanieActivity extends AppCompatActivity {
                         editor.putInt("id", idComp);
 
                         editor.putString("name", company);
+
+                        editor.putInt("assets", assets);
+
+                        editor.putInt("licences", licences);
+
+                        editor.putInt("accessories", accessories);
 
                         editor.apply();
 
